@@ -451,7 +451,7 @@ def game_loop():
             if enemy_dict[enemy] != None:
                 enemy_dict[enemy].draw()
 
-        lad.draw()
+        lad.draw() 
         player.health(lad)
         score_text = font.render('Score: {}'.format(score), False, (0, 0, 0),(122,122,122))
         screen.blit(score_text, (0,0))
