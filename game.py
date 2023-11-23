@@ -104,32 +104,32 @@ if __name__ != '__main__':
         #---------------------------------------------------------------------------
 
         class missile(object):
-            #list of bullets queued to be fired
+            #list of missiles queued to be fired
             missile_list = []     
-            #bullet velocity                       
+            #missile velocity                       
             vel = 30   
 
             def __init__(self,px, py):
-                #checking if the bullet list has less than 5 bullets, proceeding to move bullet.
+                #checking if the missile list has less than 5 missiles, proceeding to move missile.
                 if len(self.missile_list) < 5   :  
                     
-                    #the bullet with required configuration is appended into bullet list and queued for firing.
+                    #the missile with required configuration is appended into missile list and queued for firing.
                     self.missile_list.append([px + 48 ,py + 80]) 
                     
                 else:
-                    #if there are 5 bullets in the list the last bullet is removed from the list to make space for a new bullet on screen.
+                    #if there are 5 missiles in the list the last missile is removed from the list to make space for a new missile on screen.
                     self.missile_list.pop()   
 
             def movebull(self,i): 
-                #i is the list containing the information about the configuration of that bullet.
+                #i is the list containing the information about the configuration of that missile.
                 i[1] -= self.vel 
-                #deleting bullets 
+                #deleting missiles 
                 missile.delete(self,i) 
             
 
             def delete(self,i):
                 nonlocal missile_list_iterable
-                #if bullet hits the edges, it is deleted
+                #if missile hits the edges, it is deleted
                 if i[0] > 1200 or i[1] > 800 or i[1] < 0 or i[0] < 0: 
                     self.missile_list.remove(i)
                     missile_list_iterable -=1
@@ -163,8 +163,8 @@ if __name__ != '__main__':
             
             if len(missile.missile_list) != 0:
                 i = missile.missile_list[missile_list_iterable]
-                screen.blit(missile_img, (i[0], i[1]))                             #displays bullet on screen
-                missile.movebull(missile,i)                                  #fn to move bullet
+                screen.blit(missile_img, (i[0], i[1]))                             #displays missile on screen
+                missile.movebull(missile,i)                                  #fn to move missile
             
             pygame.display.update()                     #updates screen to show all characters 
 
