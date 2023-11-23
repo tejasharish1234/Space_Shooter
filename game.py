@@ -1,4 +1,4 @@
-if __name__ == '__main__':
+if __name__ != '__main__':
     def game_loop():
         #importing necessary modules
         import pygame
@@ -27,17 +27,17 @@ if __name__ == '__main__':
                 self.vel = 10               #rocket velocity
                 self.health = 100           #earth's health
                 #self.destroyed = False            #flag variable to check if earth has survived the attack or has been destroyed
-                self.attack_cooldown = 0     #variable to allow only one missile to be fired every 3 iterations
+                self.shoot_cooldown = 0     #variable to allow only one missile to be fired every 3 iterations
             
             def draw(self):                                             #fn called in maindraw
                 screen.blit(rocketship, (self.x, self.y))               #displays the image on the screen at the x&y coordinates              
             
-            def attack(self):                                            #fn called every time space is pressed
+            def shoot(self):                                            #fn called every time space is pressed
                 # case that missile has just been shot, the cooldown is set back to 3 so there is a gap between shots.(makes the animation smoother)
-                if self.attack_cooldown == 0:    
-                    self.attack_cooldown =  3
+                if self.shoot_cooldown == 0:    
+                    self.shoot_cooldown =  3
                     #assigning variables to the missile class
-                    bulletss(self.x, self.y)
+                    missile(self.x, self.y)
             
             def life(self):                       #fn called in maindraw
                 #draw a shape (screen, color, shape(x,y,length, width))
@@ -82,17 +82,17 @@ if __name__ == '__main__':
                 self.y += self.vely
             
             def destroy(self):                          #fn called in draw()
-                nonlocal score, running_dict, bull_iterable
-                #if the player is within the coordinates of the rival, rival is terminated and is removed from the screen and game.
+                nonlocal score, running_dict, missile_list_iterable
+                #if the missile is within the coordinates of the asteroid, asteroid is terminated and is removed from the screen and game.
                 
-                for x in bulletss.bullet_list:
+                for x in missile.missile_list:
                     if (self.x < x[0] < self.x + 100) and (self.y < x[1] < self.y + 120):
-                        #setting the value of enemy key to none so it cannot be called/ drawn in the game again.
+                        #setting the value of asteroid key to none so it cannot be called/ drawn in the game again.
                         running_dict [self.name] = None 
                         #100 points increment per kill.
                         score += 100   
-                        bulletss.bullet_list.remove(x)
-                        bull_iterable -= 1
+                        missile.missile_list.remove(x)
+                        missile_list_iterable -= 1
 
             def kill_earth(self):                       #fn called in draw()
                 if self.check_hit == False:
@@ -103,55 +103,55 @@ if __name__ == '__main__':
 
         #---------------------------------------------------------------------------
 
-        class bulletss(object):
+        class missile(object):
             #list of bullets queued to be fired
-            bullet_list = []     
+            missile_list = []     
             #bullet velocity                       
             vel = 30   
 
             def __init__(self,px, py):
                 #checking if the bullet list has less than 5 bullets, proceeding to move bullet.
-                if len(self.bullet_list) < 5:  
+                if len(self.missile_list) < 5   :  
                     
                     #the bullet with required configuration is appended into bullet list and queued for firing.
-                    self.bullet_list.append([px + 48 ,py + 80]) 
+                    self.missile_list.append([px + 48 ,py + 80]) 
                     
                 else:
                     #if there are 5 bullets in the list the last bullet is removed from the list to make space for a new bullet on screen.
-                    self.bullet_list.pop()   
+                    self.missile_list.pop()   
 
             def movebull(self,i): 
                 #i is the list containing the information about the configuration of that bullet.
                 i[1] -= self.vel 
                 #deleting bullets 
-                bulletss.delete(self,i) 
+                missile.delete(self,i) 
             
 
             def delete(self,i):
-                nonlocal bull_iterable
+                nonlocal missile_list_iterable
                 #if bullet hits the edges, it is deleted
                 if i[0] > 1200 or i[1] > 800 or i[1] < 0 or i[0] < 0: 
-                    self.bullet_list.remove(i)
-                    bull_iterable -=1
+                    self.missile_list.remove(i)
+                    missile_list_iterable -=1
         #---------------------------------------------------------------------------
 
         #setting a font to be used to display text on screen
         font = pygame.font.SysFont('Comic Sans MS', 25)
         health_text = font.render('Health: ', False, (0, 0, 0), (122,122,122))
         millenium_falcon = rocket()
-        rival0 = asteroid('rival0')
-        running_dict = {'rival0':rival0}
+        asteroid0 = asteroid('asteroid0')
+        running_dict = {'asteroid0':asteroid0}
         not_running_dict = {}
 
         for val in range(1,48):
-            x = 'rival{}'.format(val)
+            x = 'asteroid{}'.format(val)
             not_running_dict[x] = asteroid(x)
 
         def maindraw():                                 #draws all characters on screen}
             screen.blit(bg, (0,0))                      #draws the screen bg
-            for enemy in running_dict:
-                if running_dict[enemy] != None:
-                    running_dict[enemy].draw()
+            for asteroid in running_dict:
+                if running_dict[asteroid] != None:
+                    running_dict[asteroid].draw()
 
             millenium_falcon.draw()
             rocket.life(millenium_falcon)
@@ -161,10 +161,10 @@ if __name__ == '__main__':
             timelabel = font.render("Time - {} s".format(seconds), False, (0,0,0), (122,122,122))
             screen.blit(timelabel, (1050,0))
             
-            if len(bulletss.bullet_list) != 0:
-                i = bulletss.bullet_list[bull_iterable]
+            if len(missile.missile_list) != 0:
+                i = missile.missile_list[missile_list_iterable]
                 screen.blit(missile_img, (i[0], i[1]))                             #displays bullet on screen
-                bulletss.movebull(bulletss,i)                                  #fn to move bullet
+                missile.movebull(missile,i)                                  #fn to move bullet
             
             pygame.display.update()                     #updates screen to show all characters 
 
@@ -173,7 +173,7 @@ if __name__ == '__main__':
         milliseconds = 0                            
         seconds = 0                                 #time in seconds
         new_guy_timer = 0                           #time in 
-        bull_iterable = 0                                       #iterable to iterate through bullet_list
+        missile_list_iterable = 0                                       #iterable to iterate through missile_list
         running = True
 
         #---------------------------------------------------------------------------
@@ -195,10 +195,10 @@ if __name__ == '__main__':
             if seconds >= 120:
                 running = False
             
-            if bull_iterable < len(bulletss.bullet_list) - 1:                              #so that index does not go out of range
-                bull_iterable += 1                                                         #increment iterable
+            if missile_list_iterable < len(missile.missile_list) - 1:                              #so that index does not go out of range
+                missile_list_iterable += 1                                                         #increment iterable
             else:
-                bull_iterable = 0                                                          #reset to 0 if it is out of range
+                missile_list_iterable = 0                                                          #reset to 0 if it is out of range
 
             keys = pygame.key.get_pressed()                                    #list of all keys on keyboard
             
@@ -209,8 +209,8 @@ if __name__ == '__main__':
                 millenium_falcon.x += millenium_falcon.vel
                 
             if keys[pygame.K_SPACE]:
-                millenium_falcon.attack()
-                millenium_falcon.attack_cooldown -= 1
+                millenium_falcon.shoot()
+                millenium_falcon.shoot_cooldown -= 1
 
 
             milliseconds += clock.tick_busy_loop(150)
@@ -255,4 +255,3 @@ if __name__ == '__main__':
         pygame.quit()                                                          #closes pygame
 
         return score, seconds
-    game_loop()
