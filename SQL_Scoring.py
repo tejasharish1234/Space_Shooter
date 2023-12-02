@@ -1,35 +1,11 @@
 from game import game_loop
 import mysql.connector as m
+from sorts import *
 if __name__ != '__main__':
     def run_game(name):             #fn called in menu.py
             con = m.connect(host = 'localhost', username = 'root', passwd = 'fab4', db = 'project')
 
-            def insertion_sort_scores(lst):         #sort the scores from highest to lowest using insertion sort algorithm
-                length = len(lst)
-                for i in range(1, length):
-                    temp = lst[i]
-                    j = i-1
-                    while j >= 0 and temp[2] > lst[j][2]:
-
-                        if temp[2] > lst[j][2] :        # If score is greater
-                            lst[j+1] = lst[j]           # Swap element at jth position with (j+1)th position
-                            j -= 1
-                    else:
-                        lst[j+1] = temp
-            
-            def bubble_sort_time(lst):          # sort the scores, if equal, based on time taken to complete from lowest to highest
-                                                # using bubble sort algorithm
-                n = len(lst)
-                for i in range(n): # Number of passes
-                    for j in range(0, n-i-1):
-                
-                        if lst[j][2] == lst[j+1][2]:                    # Check if scores are equal
-                            if lst[j][3] > lst[j+1][3]:                 # If time is greater
-                                lst[j], lst[j+1] = lst[j+1], lst[j]     # Swap element at jth position with (j+1)th position
-
-            #---------------------------------------------------------------------------
-            
-            score, time = game_loop()                           # run the game and store the returned values
+            score, time = game_loop()                           #run the game and store the returned values
             
             player = [100, name, score , time]
             if con.is_connected():
@@ -72,7 +48,7 @@ if __name__ != '__main__':
 
             con.close()
 
-            if time == 120:       #return score to decide which window should be displayed - win or lose
+            if time == 65:       #return score to decide which window should be displayed - win or lose
                 return 'win'
             else:
                 return 'lose'

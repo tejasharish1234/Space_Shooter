@@ -1,11 +1,12 @@
-from tkinter import *   #importing tkinter
+#importing necessary modules
+from tkinter import * 
 import mysql.connector as m
 from tkinter import ttk
 import SQL_Scoring
-root=Tk() #creating a window
-root.geometry("800x600") #setting window dimensions
-root.title("Main Menu")
-root.configure(background = '#000000')
+root=Tk()                                   #creating a window
+root.geometry("800x600")                    #setting window dimensions
+root.title("Main Menu")                     #giving it a title
+root.configure(background = '#000000')      #giving it a color
 Label(root, text = "Space Fighters", font = ('Comic Sans MS', 48), bg = '#000000', fg = '#ffffff').pack(anchor=CENTER)
 
 #---------------------------------------------------------------------------
@@ -32,11 +33,9 @@ def startgame(): #function to start game
         lose.grid()
         lose.title("Defeat")
         lose.configure(bg = '#ff636f')
-        
         Label(lose, text = 'You Lose 😕 \nBetter Luck Next Time.', font = ("Comic Sans MS", 14), border = 3, bg = '#ff636f').place(x = 50, y = 50)
         Button(lose, text = "Back", font = ("Comic Sans MS", 14), command = lose.destroy).place(x = 200, y = 200)
 
-    
     def retrieve_input(): #function to retrieve data on the outcome of the game
         name = textBox.get("1.0", "end-1c")
         win1.destroy()
