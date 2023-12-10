@@ -19,7 +19,6 @@ def game_loop():
 
     #setting a font to be used to display text on screen
     font = pygame.font.SysFont('Comic Sans MS', 25)
-    health_text = font.render('Health: ', False, (0, 0, 0), (122,122,122))
 
     class rocket(object):
         
@@ -141,9 +140,11 @@ def game_loop():
     not_running_dict = {}                           #asteroids to be drawn on screen in the future
 
     #creating required number of asteroids
-    for val in range(1,35):
+    for val in range(1,32):
         x = 'asteroid{}'.format(val)
         not_running_dict[x] = asteroid(x)
+
+    health_text = font.render('Health: ', False, (0, 0, 0), (122,122,122))
 
     def maindraw():                                 #draws all objects on screen, called in while loop as this needs to run infinitely till the game is stopped.
         screen.blit(bg, (0,0))                      #draws the screen background
@@ -232,9 +233,10 @@ def game_loop():
         elif 45 <= seconds <= 60:
             if new_asteroid_timer == 1:
                 #every second an asteroid is drawn onto the screen
-                new_asteroid_timer = 0                                  
-                x = not_running_dict.popitem()                           
-                running_dict [x[0]] = x[1]       
+                new_asteroid_timer = 0      
+                if not_running_dict:                            
+                    x = not_running_dict.popitem()                           
+                    running_dict [x[0]] = x[1]       
 
             elif new_asteroid_timer > 1:
                 new_asteroid_timer = 1

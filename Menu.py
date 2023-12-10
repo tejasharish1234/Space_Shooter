@@ -49,8 +49,7 @@ def startgame(): #function to start game
     Label(win1, text = "Enter name:", font = ('Comic Sans MS', 16), bg = '#ff636f').place(x = 70, y = 150)
     textBox = Text(win1, height = 1, width = 10, font = ('Comic Sans MS',12))
     textBox.place(x = 200, y = 155)
-    buttonCommit = Button(win1, height = 1, width = 10, text = "Enter", font = ('Comic Sans MS', 12), command = lambda:retrieve_input())
-    buttonCommit.place(x = 150, y = 200)
+    Button(win1, height = 1, width = 10, text = "Enter", font = ('Comic Sans MS', 12), command = lambda:retrieve_input()).place(x = 150, y = 200)
     Button(win1, text = "Back", font = ("Comic Sans MS", 14), command = win1.destroy).place(x = 300, y = 300)
 
 #---------------------------------------------------------------------------
@@ -66,8 +65,8 @@ def rules(): #function to bring up rules menu
 1. Use arrow keys to move and space to shoot. \n
 2. To destroy the asteroid, align the rocketship with the\n asteroid and press space.\n
 3. The planet has 100 health. Every asteroid strike does 25 damage.\n
-4. For the first 30 seconds, an asteroid will strike every 4 seconds. \nAfter 30 seconds,an asteroid will strike every 3 seconds.\n After 60 seconds, an asteroid will strike every 2 seconds.\n
-5. The game lasts 2 minutes. \nProtect the planet from total destruction! \n''',
+4. For the first 25 seconds, an asteroid will strike every 3 seconds. \nAfter 25 seconds, an asteroid will strike every 2 seconds.\n For the last 15 seconds, an asteroid will strike every second.\n
+5. The game lasts 1 minute. \nProtect the planet from total destruction! \n''',
 font = ("Comic Sans MS", 14), border = 3, bg = '#ff636f').pack(anchor = CENTER)
     
     Button(win2, text= "Back", font=("Comic Sans MS",14), command=win2.destroy, bg="#cdcdcd", fg='black').place(x = 500, y = 400)

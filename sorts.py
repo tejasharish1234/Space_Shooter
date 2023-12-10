@@ -18,6 +18,6 @@ def bubble_sort_time(lst):          # sort the scores, if equal, based on time t
         for j in range(0, n-i-1):
     
             if lst[j][2] == lst[j+1][2]:                    # Check if scores are equal
-                if lst[j][3] > lst[j+1][3]:                 # If time is greater
+                if lst[j][3] < lst[j+1][3]:                 # If time is lesser
                     lst[j], lst[j+1] = lst[j+1], lst[j]     # Swap element at jth position with (j+1)th position
 
